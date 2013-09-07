@@ -27,30 +27,29 @@ public class KSAdminPlugin extends JavaPlugin
 			Bukkit.getLogger().severe("PEX Not detected...");
 		}
 	}
-
+	
 	@Override
 	public void onDisable()
 	{
 		mysql.releaseMysql();
 	}
-
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	{
 		switch (cmd.getName().toLowerCase())
 		{
 			case "help":
-				break;
-			case "setpassword":
-
-				break;
+			break;
+			case "setlogin":
+			
+			break;
 		}
 		return true;
 	}
-
+	
 	public static void log(String s)
 	{
-		Bukkit.getLogger().info("[KodleeShare Admin Plugin] "
-				+ s);
+		Bukkit.getLogger().info("[KodleeShare Admin Plugin] " + s);
 	}
 }

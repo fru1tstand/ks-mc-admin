@@ -19,21 +19,17 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 public class LoginListener implements Listener
 {
-	public LoginListener()
-	{}
-
+	public LoginListener() {}
+	
 	@EventHandler
 	public void playerLogin(PlayerLoginEvent event)
 	{
 		PermissionUser p = PermissionsEx.getUser(event.getPlayer());
-
+		
 		for (String s : p.getGroupsNames())
 		{
-			KSAdminPlugin.log("Player "
-					+ event.getPlayer().getName()
-					+ " is in group: "
-					+ s);
-
+			KSAdminPlugin.log("Player " + event.getPlayer().getName() + " is in group: " + s);
+			
 			switch (s)
 			{
 				case "banned": // check for unbanning
@@ -44,14 +40,11 @@ public class LoginListener implements Listener
 					try
 					{
 						query = conn.createStatement();
-						result = query.executeQuery("SELECT expires FROM ks_entries WHERE type = 2 AND player_id = (SELECT player_id FROM hawk_players WHERE player = '"
-								+ event.getPlayer().getName()
-								+ "') ORDER BY id DESC LIMIT 1");
-
+						result = query.executeQuery("SELECT expires FROM ks_entries WHERE type = 2 AND player_id = (SELECT player_id FROM hawk_players WHERE player = '" + event.getPlayer().getName() + "') ORDER BY id DESC LIMIT 1");
+						
 						while (result.next())
 						{
-							KSAdminPlugin.log("Time: "
-									+ System.currentTimeMillis());
+							KSAdminPlugin.log("Time: " + System.currentTimeMillis());
 							if ((System.currentTimeMillis() / 1000) > Integer.parseInt(result.getString("expires")))
 							{
 								event.getPlayer().sendMessage(Color.GRAY + "Your time is up! You've been automatically unbanned from the server and are a regular member again.");
@@ -80,11 +73,11 @@ public class LoginListener implements Listener
 								e.printStackTrace();
 							}
 					}
-					break;
+				break;
 				case "visitor":
 					event.getPlayer().sendMessage(Color.GRAY + "Welcome to the KodleeShare server!");
-					event.getPlayer().sendMessage(Color.GRAY + "Please visit http://kodleeshare.net/minecraft/")
-					break;
+					event.getPlayer().sendMessage(Color.GRAY + "Please visit http://kodleeshare.net/mc/");
+				break;
 			}
 		}
 	}
