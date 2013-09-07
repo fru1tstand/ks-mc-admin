@@ -1,3 +1,6 @@
 name: KSAdminPlugin
 main: net.kodleeshare.minecraft.KSAdminPlugin
 version: 1.0
+commands:
+    setpassword:
+    help:

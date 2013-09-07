@@ -1,8 +1,12 @@
 package net.kodleeshare.minecraft.listeners;
 
+import java.util.Arrays;
+
+import net.kodleeshare.minecraft.other.CommandHandler;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandListener implements Listener
 {
@@ -10,26 +14,21 @@ public class CommandListener implements Listener
 	{}
 
 	@EventHandler
-	public void commandHandler(final AsyncPlayerChatEvent e)
+	public void commandHandler(final PlayerCommandPreprocessEvent e)
 	{
-		String[] args = e.getMessage().split(" ");
-		if (args[0] == null)
+		if (e.getMessage().charAt(0) != '/')
 			return;
-		switch (args[0].toLowerCase())
-		{
-			case "/ban":
-				e.setCancelled(true);
-				break;
-			case "/kick":
-				e.setCancelled(true);
-				break;
-			case "/register":
-				e.setCancelled(true);
-				break;
-			case "/registeruser":
-				e.setCancelled(true);
 
-				break;
-		}
+		String[] args = e.getMessage().trim().split(" ");
+		if (args.length == 0)
+			return;
+
+		String[] values = { "/ban", "/kick", "/help" };
+		if (!Arrays.asList(values).contains(args[0].toLowerCase()))
+			return;
+
+		e.setCancelled(true);
+		(new Thread(new CommandHandler(e))).start();
 	}
+
 }
